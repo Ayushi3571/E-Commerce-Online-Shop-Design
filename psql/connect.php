@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 $host = "localhost";
 $dbname = "online_shop";
 $user = "admin";
-$password = "123";
+$password = "test";
 $port = "5432"; // Default PostgreSQL port
 
 // Connection string (DSN)
@@ -16,17 +16,17 @@ $conn_string = "host=$host port=$port dbname=$dbname user=$user password=$passwo
 $dbconn = pg_connect($conn_string);
 
 if (!$dbconn) {
-    die("Error in connection: " . pg_last_error());
+    die("Error in connection: " . pg_last_error($dbconn));
 }
 
 // Query to fetch all entries from the table
-$query = "SELECT * FROM Products";
+$query = "SELECT * FROM products";
 
 // Execute the query
 $result = pg_query($dbconn, $query);
 
 if (!$result) {
-    die("Error in SQL query: " . pg_last_error());
+    die("Error in SQL query: " . pg_last_error($dbconn));
 }
 
 // Fetch all rows as an associative array
