@@ -3,6 +3,9 @@ const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
+fetch('connect.php')
+  .then(response => response.json())
+
 const prod1 = {
   imgSrc: "img/nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
   name: "Nikon D3200",
@@ -39,8 +42,8 @@ const displayProducts = () => {
   for (let i = 0; i < arr.length; i++) {
     // Get values
     let imgSrc = arr[i].imgSrc;
-    let name = arr[i].name;
-    let price = arr[i].price;
+    let name = response[i].name;
+    let price = response[i].price;
     const check = "prod";
     createProd(imgSrc, name, price, check);
   }
