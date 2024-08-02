@@ -3,64 +3,77 @@ const prodContProd = document.querySelector("#products");
 const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
+// Array to map image sources to product names
+const productImages = {
+  "Nikon D3200": "nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
+  "Pentax MZ-50": "mikedelta-zUnc4-eHw6E-unsplash.jpg",
+  "Canon EOS": "rohit-jawalkar-bZvX1kozeRg-unsplash.jpg"
+};
+
+// Fetch JSON data
 fetch('connect.php')
-  .then(return response)
+  .then(response => response.json())
   .then(data => {
-      // Assuming data is the JSON array
-      const productsContainer = document.getElementById('products');
-      data.forEach(product => {
-        // Get values
-        let imgSrc = productImages[product.name];
-        let name = product.name;
-        let price = product.price;
+    data.forEach(product => {
+      // Get values
+      let imgSrc = productImages[product.name];
+      let name = product.name;
+      let price = product.price;
+      let description = product.description;
 
-        // Call the createProd function (Assuming it creates and appends the product element to the DOM)
-        createProd(imgSrc, name, price);
-      });
-    })
-    .catch(error => console.error('Error fetching data:', error));
+      // Call the createProd function (Assuming it creates and appends the product element to the DOM)
+      createProd(imgSrc, name, price, description, 'prod');
+    });
+  })
+  .catch(error => console.error('Error fetching data:', error));
 
+// Function to create elements
+const createProd = (imgSrc, name, price, description, check) => {
+  let divProd = document.createElement("div");
+  let imgProd = document.createElement("img");
+  let nameProd = document.createElement("h4");
+  let priceProd = document.createElement("p");
+  let buttonProd = document.createElement("button");
+  let divOverlay = document.createElement("div");
+  let prodDesc = document.createElement("p");
+  let buttonMore = document.createElement("button");
 
-const prod1 = {
-  imgSrc: "nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
-  name: "Nikon D3200",
-  price: 599,
-};
-const prod2 = {
-  imgSrc: "imgmikedelta-zUnc4-eHw6E-unsplash.jpg",
-  name: "Pentax MZ-50",
-  price: 299,
-};
-const prod3 = {
-  imgSrc: "rohit-jawalkar-bZvX1kozeRg-unsplash.jpg",
-  name: "Canon E0S",
-  price: 699,
-};
+  // Set values on elements
+  imgProd.src = imgSrc;
+  nameProd.innerText = name;
+  priceProd.innerText = "$" + price;
+  buttonProd.innerText = "Add to cart";
+  prodDesc.innerText = description;
+  buttonMore.innerText = "More info";
 
-const arr = [
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-  prod1,
-  prod2,
-  prod3,
-];
+  // Add classes on elements
+  priceProd.className = "price";
+  buttonProd.className = "atc-btn";
+  buttonMore.className = "rm-btn";
+  divOverlay.className = "overlay";
+  prodDesc.className = "description";
+  divProd.className = "img-products";
 
-// Function to display products on products.html
-const displayProducts = () => {
-  for (let i = 0; i < arr.length; i++) {
-    // Get values
-    let imgSrc = arr[i].imgSrc;
-    let name = response[i].name;
-    let price = response[i].price;
-    const check = "prod";
-    createProd(imgSrc, name, price, check);
+  // Add hover event to show details
+  divProd.addEventListener("mouseenter", () => {
+    divOverlay.style.display = "block";
+  });
+  divProd.addEventListener("mouseleave", () => {
+    divOverlay.style.display = "none";
+  });
+
+  // Add elements to div
+  divOverlay.appendChild(prodDesc);
+  divOverlay.appendChild(buttonMore);
+  divOverlay.appendChild(buttonProd);
+  divProd.appendChild(imgProd);
+  divProd.appendChild(nameProd);
+  divProd.appendChild(priceProd);
+  divProd.appendChild(divOverlay);
+  if (check === "prod") {
+    prodContProd.appendChild(divProd);
+  } else if (check === "index") {
+    prodContIndex.appendChild(divProd);
   }
 };
 
@@ -86,49 +99,7 @@ const displayProdCart = () => {
   }
 };
 
-// Function to create elements
-const createProd = (imgSrc, name, price, check) => {
-  let divProd = document.createElement("div");
-  let imgProd = document.createElement("img");
-  let nameProd = document.createElement("h4");
-  let priceProd = document.createElement("p");
-  let buttonProd = document.createElement("button");
-  let divOverlay = document.createElement("div");
-  let prodDesc = document.createElement("p");
-  let buttonMore = document.createElement("button");
-
-  // Set values on elements
-  imgProd.src = imgSrc;
-  nameProd.innerText = name;
-  priceProd.innerText = "$" + price;
-  buttonProd.innerText = "Add to cart";
-  prodDesc.innerText =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis sunt quam alias soluta ad, labore quas velit rem dolorum eius cum laboriosam magni provident similique!";
-  buttonMore.innerText = "More info";
-
-  // Add classes on elements
-  priceProd.className = "price";
-  buttonProd.className = "atc-btn";
-  buttonMore.className = "rm-btn";
-  divOverlay.className = "overlay";
-  prodDesc.className = "description";
-  divProd.className = "img-products";
-
-  // Add elements to div
-  divOverlay.appendChild(prodDesc);
-  divOverlay.appendChild(buttonMore);
-  divOverlay.appendChild(buttonProd);
-  divProd.appendChild(imgProd);
-  divProd.appendChild(nameProd);
-  divProd.appendChild(priceProd);
-  divProd.appendChild(divOverlay);
-  if (check === "prod") {
-    prodContProd.appendChild(divProd);
-  } else if (check === "index") {
-    prodContIndex.appendChild(divProd);
-  }
-};
-
+// Function to create cart elements
 const createCartProd = (imgSrc, name, price) => {
   let divProd = document.createElement("div");
   let imgProd = document.createElement("img");
