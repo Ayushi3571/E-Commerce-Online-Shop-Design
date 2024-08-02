@@ -4,20 +4,35 @@ const prodContIndex = document.querySelector("#prod-index");
 const prodContCart = document.querySelector("#prod-cart");
 
 fetch('connect.php')
-  .then(response => response.json())
+  .then(return response)
+  .then(data => {
+      // Assuming data is the JSON array
+      const productsContainer = document.getElementById('products');
+      data.forEach(product => {
+        // Get values
+        let imgSrc = productImages[product.name];
+        let name = product.name;
+        let price = product.price;
+
+        // Call the createProd function (Assuming it creates and appends the product element to the DOM)
+        createProd(imgSrc, name, price);
+      });
+    })
+    .catch(error => console.error('Error fetching data:', error));
+
 
 const prod1 = {
-  imgSrc: "img/nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
+  imgSrc: "nayris-aquino-Lidm0GHUL-0-unsplash.jpg",
   name: "Nikon D3200",
   price: 599,
 };
 const prod2 = {
-  imgSrc: "img/mikedelta-zUnc4-eHw6E-unsplash.jpg",
+  imgSrc: "imgmikedelta-zUnc4-eHw6E-unsplash.jpg",
   name: "Pentax MZ-50",
   price: 299,
 };
 const prod3 = {
-  imgSrc: "img/rohit-jawalkar-bZvX1kozeRg-unsplash.jpg",
+  imgSrc: "rohit-jawalkar-bZvX1kozeRg-unsplash.jpg",
   name: "Canon E0S",
   price: 699,
 };
