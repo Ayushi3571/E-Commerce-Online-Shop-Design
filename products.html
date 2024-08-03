@@ -23,6 +23,7 @@
     <script src="https://kit.fontawesome.com/3318035e44.js"></script>
     <link rel="icon" href="camera-logo-16.png" type="image/png" />
     <title>best photo shot</title>
+
   </head>
   <body onload="displayProducts()">
     <!-- Navbar -->
@@ -69,17 +70,15 @@
       <header class="header">
         <h1 class="company-name">best photo shot</h1>
         <div class="header-spans">
-          <span class="search"
-            ><i class="fas fa-search"></i
-            ><input
-              type="search"
-              id="search-input"
-              name="search"
-              placeholder="Search"
-          /></span>
+          <span class="search">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input type="text" id="searchBox" placeholder="Search products" name="search" placeholder="Search"></span>
+            <button onclick="handleSearch()">Search</button>
           <span class="user-wrapper">
-            <i class="fa-solid fa-heart"></i>
-            <i class="fa-solid fa-user"></i>
+            <!-- <i class="fa-solid fa-heart" ></i> -->
+            <a href="http://localhost/login.php">
+        <i class="fa-solid fa-user"></i>
+      </a>
             <a href="shopping-cart.html"
               ><i class="fa-solid fa-cart-shopping" value="2"></i
             ></a>
